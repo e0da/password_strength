@@ -1,10 +1,15 @@
 module PasswordEntropy
 
   #
-  # Password entropy according to NIST Special Publication 800-63
+  # Password entropy according to NIST Special Publication 800-63, but without the dictionary check.
   #
   # <http://en.wikipedia.org/wiki/Password_strength#NIST_Special_Publication_800-63>
   #
+  # The dictionary check is expensive and adds unnecessary complexity. We can
+  # just do without the bonus points.  Just make your password longer or
+  # something.
+  #
+  # We'll also do some stuff at the end to stop obviously bad passwords.
   #
   def self.entropy(password)
 
@@ -28,15 +33,31 @@ module PasswordEntropy
     end
 
 
+    # Characters 21 and above have one bit of entropy per character.
+    #
+    for i in 21..password.length
+      total += 1
+    end
 
-    ##   * Characters 21 and above have one bit of entropy per character.
-    #   * A "bonus" of six bits is added if both upper case letters and
-    #     non-alphabetic characters are used.
-    #   * A "bonus" of six bits is added for passwords of length 1 through 19
-    #     characters following an extensive dictionary check to ensure the password
-    #     is not contained within a large dictionary. Passwords of 20 characters or
-    #     more do not receive this bonus because it is assumed they are
-    #     pass-phrases consisting of multiple dictionary words.
+    # A bonus of six bits is added if both upper case letters and
+    # non-alphabetic characters are used.
+    #
+    total += 6 if password.match(/[A-Z]/) && password.match(/[^a-z]/i)
+
+    # Numbers only get you a zero.
+    #
+    return 0 if password.match(/^\d+$/)
+
+    # runs of consecutive letters or numbers get you a deduction of 6 bits each.
+    # Exceptions for reasonable ones like "def".
+    #
+    %w[
+      abc bcd efg fgh ijk jkl klm lmn mno
+      nop opq pqr qrs rst stu tuv uvw vwx wxy xyz
+    ].each do |run|
+      total -= 6 if run.match password.downcase
+    end
+
 
     total
   end

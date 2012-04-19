@@ -1,8 +1,4 @@
-#!/usr/bin/env ruby
-
-
-class String
-
+module PasswordEntropy
 
   #
   # Password entropy according to NIST Special Publication 800-63
@@ -10,24 +6,24 @@ class String
   # <http://en.wikipedia.org/wiki/Password_strength#NIST_Special_Publication_800-63>
   #
   #
-  def entropy
+  def self.entropy(password)
 
     total = 0
 
     # The entropy of the first character is four bits
     #
-    total += 4 if self.length > 0
+    total += 4 if password.length > 0
 
     # The entropy of the next seven characters are two bits per character
     #
-    for i in 1...[self.length, 8].min 
+    for i in 1...[password.length, 8].min 
       total += 2
     end
 
     # The ninth through the twentieth character has 1.5 bits of entropy per
     # character
     #
-    for i in 8...[self.length, 20].min
+    for i in 8...[password.length, 20].min
       total += 1.5
     end
 
@@ -44,14 +40,4 @@ class String
 
     total
   end
-
-  def strength
-    self.entropy
-  end
-end
-
-loop do
-  '> '.display
-  password = gets.strip.chomp
-  puts password.strength
 end

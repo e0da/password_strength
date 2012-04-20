@@ -25,7 +25,7 @@ class String
     9.upto([20, length].min) { entropy += 1.5 }
     21.upto(length)          { entropy += 1   }
     entropy += 3 if match(/[A-Z]/) && match(/[a-z]/)
-    entropy += 3 if match(/[^a-z]/i)
+    entropy += 3 if match(/[^a-z]/)
 
     case entropy
     when 0..22

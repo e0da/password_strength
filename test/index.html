@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test Password Strength</title>
+  </head>
+  <body>
+    <h1>Password Strength</h1>
+    <form>
+      <label for=password>Password: 
+      <input type=text id=password name=password>
+    </form>
+    <h2>Strength Rating: <span id=strength></h2>
+    <script src=../lib/password_strength.js></script>
+    <script>
+      document.querySelector('input').addEventListener('keyup', function() {
+        document.querySelector('#strength').innerText = this.value.password_strength();
+      });
+    </script>

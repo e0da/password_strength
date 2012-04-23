@@ -2,15 +2,15 @@
 # These methods are derived from their Ruby equivalents in password_strength.rb
 #
 
-weighted_entropy = (str) ->
+String.prototype.weighted_entropy = ->
 
   min = Math.min
-  len = str.length
+  len = this.length
 
   entropy  = 0
-  entropy += 4   if str.length > 0
-  entropy += 3   if str.match(/[^a-z]/i)
-  entropy += 3   if str.match(/[A-Z]/) and str.match(/[a-z]/)
+  entropy += 4   if this.length > 0
+  entropy += 3   if this.match(/[^a-z]/i)
+  entropy += 3   if this.match(/[A-Z]/) and this.match(/[a-z]/)
 
   entropy += 2   for i in [ 2..min( 8, len)] if len > 1
   entropy += 1.5 for i in [ 9..min(20, len)] if len > 8
@@ -19,7 +19,7 @@ weighted_entropy = (str) ->
   entropy
 
 String.prototype.password_strength = ->
-  entropy = weighted_entropy(this)
+  entropy = this.weighted_entropy()
   console.log entropy
   return 'weak'   if  0 <= entropy < 22
   return 'ok'     if 22 <= entropy < 25

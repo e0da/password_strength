@@ -20,7 +20,6 @@ String.prototype.weighted_entropy = ->
 
 String.prototype.password_strength = ->
   entropy = this.weighted_entropy()
-  console.log entropy
   return 'weak'   if  0 <= entropy < 22
   return 'ok'     if 22 <= entropy < 25
   return 'strong' if 25 <= entropy < 1000

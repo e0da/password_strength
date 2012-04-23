@@ -6,6 +6,17 @@ class String
   # Returns one of :weak, :ok, or :strong.
   #
   def password_strength
+    case weighted_entropy
+    when 0..22
+      :weak
+    when 22..24
+      :ok
+    when 24..1000
+      :strong
+    end
+  end
+
+  def weighted_entropy
 
     #
     # This is based in part on NIST Special Publication 800-63, but we're going
@@ -25,15 +36,8 @@ class String
     9.upto([20, length].min) { entropy += 1.5 }
     21.upto(length)          { entropy += 1   }
     entropy += 3 if match(/[A-Z]/) && match(/[a-z]/)
-    entropy += 3 if match(/[^a-z]/)
+    entropy += 3 if match(/[^a-z]/i)
 
-    case entropy
-    when 0..22
-      :weak
-    when 22..24
-      :ok
-    when 24..1000
-      :strong
-    end
+    entropy
   end
 end

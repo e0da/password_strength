@@ -21,7 +21,7 @@ class String
     #
 
     entropy = 4
-    2.upto([8, length].min)  { entropy += 2   }
+    2.upto([ 8, length].min) { entropy += 2   }
     9.upto([20, length].min) { entropy += 1.5 }
     21.upto(length)          { entropy += 1   }
     entropy += 3 if match(/[A-Z]/) && match(/[a-z]/)

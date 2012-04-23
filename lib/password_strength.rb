@@ -1,21 +1,5 @@
 class String
 
-  #
-  # Strength of the string as a password.
-  #
-  # Returns one of :weak, :ok, or :strong.
-  #
-  def password_strength
-    case weighted_entropy
-    when 0..22
-      :weak
-    when 22..24
-      :ok
-    when 24..1000
-      :strong
-    end
-  end
-
   def weighted_entropy
 
     #
@@ -31,13 +15,32 @@ class String
     #   * You get a 3-bit bonus for non-alphabetic characters.
     #
 
-    entropy = 4
+    entropy  = 0
+    entropy += 4 if length > 0
+    entropy += 3 if match(/[^a-z]/i)
+    entropy += 3 if match(/[A-Z]/) && match(/[a-z]/)
+
     2.upto([ 8, length].min) { entropy += 2   }
     9.upto([20, length].min) { entropy += 1.5 }
     21.upto(length)          { entropy += 1   }
-    entropy += 3 if match(/[A-Z]/) && match(/[a-z]/)
-    entropy += 3 if match(/[^a-z]/i)
 
     entropy
+  end
+
+
+  #
+  # Strength of the string as a password.
+  #
+  # Returns one of :weak, :ok, or :strong.
+  #
+  def password_strength
+    case weighted_entropy
+    when 0...22
+      :weak
+    when 22...25
+      :ok
+    when 25...1000
+      :strong
+    end
   end
 end

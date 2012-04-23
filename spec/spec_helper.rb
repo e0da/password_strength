@@ -1,1 +1,1 @@
-require 'password_entropy'
+require 'password_strength'

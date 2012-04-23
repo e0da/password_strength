@@ -3,7 +3,7 @@ String.prototype.password_strength = ->
   min = Math.min
   len = this.length
 
-  entropy = 4
+  entropy  = 4
   entropy += 2    for i in [2..min(8, len)]   if len > 1
   entropy += 1.5  for i in [9..min(20, len)]  if len > 8
   entropy += 1    for i in [21..len]          if len > 20

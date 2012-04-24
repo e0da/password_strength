@@ -13,7 +13,7 @@
     <h2>Google's Rating: <span id=gstrength></h2>
     <h2 id=short>Too Short</h2>
     <script src=//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js></script>
-    <script src=/password_strength.js></script>
+    <script src=password_strength.js></script>
     <script>
 
       'use strict';
@@ -28,7 +28,7 @@
 
           $('#strength').text(password.password_strength());
 
-          $.getJSON('/google_password_strength.json?gpass=' + password, function (data) {
+          $.getJSON('google_password_strength.json?gpass=' + password, function (data) {
             $('#gstrength').text(['weak', 'fair', 'good', 'strong'][data-1]);
           });
 

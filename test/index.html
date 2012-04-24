@@ -35,6 +35,8 @@
       'use strict';
       $(function() {
 
+        var timeout = 0;
+
         $('#short').hide();
 
         $('input[type=password]').focus();
@@ -49,9 +51,12 @@
           $('#strength').text(password.password_strength());
 
           $('#gstrength').text('...');
-          $.getJSON('google_password_strength.json?gpass=' + password, function (data) {
-            $('#gstrength').text(['weak', 'fair', 'good', 'strong'][data-1]);
-          });
+          clearTimeout(timeout);
+          timeout = setTimeout(function () {
+            $.getJSON('google_password_strength.json?gpass=' + password, function (data) {
+              $('#gstrength').text(['weak', 'fair', 'good', 'strong'][data-1]);
+            });
+          }, 200);
 
           if (password.length < 8) {
             $('#short').show();

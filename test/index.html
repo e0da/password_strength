@@ -10,9 +10,38 @@
       <input type=text id=password name=password>
     </form>
     <h2>Strength Rating: <span id=strength></h2>
-    <script src=../lib/password_strength.js></script>
+    <h2>Google's Rating: <span id=gstrength></h2>
+    <h2 id=short>Too Short</h2>
+    <script src=//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js></script>
+    <script src=/password_strength.js></script>
     <script>
-      document.querySelector('input').addEventListener('keyup', function() {
-        document.querySelector('#strength').innerText = this.value.password_strength();
+
+      'use strict';
+      $(function() {
+
+        $('#short').hide();
+
+        $('input').focus();
+
+        $('input').keyup(function () {
+          var password = $(this).val();
+
+          $('#strength').text(password.password_strength());
+
+          $.getJSON('/google_password_strength.json?gpass=' + password, function (data) {
+            $('#gstrength').text(['weak', 'fair', 'good', 'strong'][data-1]);
+          });
+
+          if (password.length < 8) {
+            $('#short').show();
+          } else {
+            console.log('fuck');
+            $('#short').hide();
+          }
+        });
+
+        $('form').submit(function (e) {
+          e.preventDefault();
+        });
       });
     </script>

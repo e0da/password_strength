@@ -12,17 +12,17 @@ EOF
 
 ASSETS = [
   {
-    route: %r[^/password_strength.js$],
+    route: %r[^/password_strength/password_strength.js$],
     type: 'application/javascript',
     body: proc { file_contents 'lib/password_strength.js' }
   }, 
   {
-    route: %r[^/(index.html)?$],
+    route: %r[^/password_strength/(index.html)?$],
     type: 'text/html',
     body: proc { file_contents 'test/index.html' }
   },
   {
-    route: %r[^/google_password_strength.json\?gpass=],
+    route: %r[^/password_strength/google_password_strength.json\?gpass=],
     type: 'application/json',
     body: proc { google_password_strength }
   }

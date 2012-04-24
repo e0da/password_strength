@@ -17,3 +17,4 @@ tmp
 _yardoc
 doc/
 lib/password_strength.js
+log/thin.log

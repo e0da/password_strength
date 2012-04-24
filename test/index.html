@@ -17,8 +17,13 @@
   <body>
     <h1>Password Strength</h1>
     <form>
-      <label for=password>Password: 
-      <input type=text id=password name=password>
+      <label for=password>Password (hidden):
+        <input type=password id=password name=password>
+      </label>
+      <br>
+      <label for=plain>Password (visible): 
+        <input type=text id=plain name=plain>
+      </label>
     </form>
     <h2>Strength Rating: <span id=strength></h2>
     <h2>Google's Rating: <span id=gstrength></h2>
@@ -32,7 +37,11 @@
 
         $('#short').hide();
 
-        $('input').focus();
+        $('input[type=password]').focus();
+
+        $('input').focus(function () {
+          $('input').not(this).val('');
+        });
 
         $('input').keyup(function () {
           var password = $(this).val();

@@ -48,6 +48,7 @@
 
           $('#strength').text(password.password_strength());
 
+          $('#gstrength').text('...');
           $.getJSON('google_password_strength.json?gpass=' + password, function (data) {
             $('#gstrength').text(['weak', 'fair', 'good', 'strong'][data-1]);
           });

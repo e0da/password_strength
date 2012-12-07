@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 class String
-  
+
   describe '.password_entropy and .password_strength' do
-    { 
+    {
       'aaaaaaaa'            => [ 4+(2*7),              :weak   ],
       'friendlygh'          => [ 4+(2*7)+(2*1.5),      :weak   ],
       'aaaaaaaA'            => [ 4+(2*7)+3,            :weak   ],

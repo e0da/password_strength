@@ -7,5 +7,5 @@ group :development, :test do
   gem 'rspec',        '~> 2',   :require => false
   gem 'shotgun',      '~> 0',   :require => false
   gem 'simplecov',    '~> 0',   :require => false
-  gem 'sinatra',      '1',      :require => false
+  gem 'sinatra',      '~> 1',   :require => false
 end
